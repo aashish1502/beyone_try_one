@@ -74,8 +74,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
+      print("The Counter value is: $_counter");
+    });
+  }
+
   void _startIncrementing() {
-    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {  // Update every 100ms
+    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+      // Update every 100ms
       setState(() {
         _counter++;
       });
@@ -83,9 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _stopIncrementing() {
-    _timer?.cancel();  // Stop the timer and thereby stop incrementing the counter
+    _timer
+        ?.cancel(); // Stop the timer and thereby stop incrementing the counter
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
               _state ? "OFF" : "ON",
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
             GestureDetector(
               onTapDown: (details) {
                 print("Calling this");
@@ -146,6 +155,57 @@ class _MyHomePageState extends State<MyHomePage> {
                     borderRadius: BorderRadius.circular(20.0)),
               ),
             ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTapDown: (details) {
+                    print("Blind up lez go");
+                    _changeState();
+                  },
+
+                  child: Container(
+                    height: 50,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        borderRadius: BorderRadius.circular(0.0)),
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.symmetric(horizontal: 5.0)),
+                GestureDetector(
+                  onTapDown: (details) {
+                    print("Blind down lez go");
+                    _changeState();
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      borderRadius: BorderRadius.circular(0.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 15.0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                    onPressed: _incrementCounter, icon: const Icon(Icons.add)),
+                IconButton(
+                    onPressed: _decrementCounter,
+                    icon: const Icon(Icons.remove)),
+                Text(
+                    style: const TextStyle(
+                      fontSize: 28,
+                    ),
+                    "$_counter")
+              ],
+            )
           ],
         ),
       ),
