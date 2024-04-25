@@ -1,6 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+
+
+
 
 void main() {
   runApp(const MyApp());
@@ -94,6 +98,27 @@ class _MyHomePageState extends State<MyHomePage> {
     _timer
         ?.cancel(); // Stop the timer and thereby stop incrementing the counter
   }
+
+  void sendData(String message) async {
+    var host = "192.168.2.77";  // Change this to your server's IP address
+    var port = 5001;            // Change this to your server's port number
+
+    try {
+      // Connect to the server
+      var socket = await Socket.connect(host, port);
+      print('Connected to: ${socket.remoteAddress.address}:${socket.remotePort}');
+
+      // Send the message
+      socket.write(message);
+
+      // Close the socket
+      await socket.close();
+      print('Connection closed');
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +220,10 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                    onPressed: _incrementCounter, icon: const Icon(Icons.add)),
+                    onPressed: () {
+                      _incrementCounter();
+                      sendData("The Counter value is: $_counter");
+                    }, icon: const Icon(Icons.add)),
                 IconButton(
                     onPressed: _decrementCounter,
                     icon: const Icon(Icons.remove)),
