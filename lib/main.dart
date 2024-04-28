@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -99,9 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ?.cancel(); // Stop the timer and thereby stop incrementing the counter
   }
 
+
+
   void sendData(String message) async {
-    var host = "192.168.2.77";  // Change this to your server's IP address
-    var port = 5001;            // Change this to your server's port number
+    var host = "172.18.195.56";  // Change this to your server's IP address
+    var port = 12345;            // Change this to your server's port number
 
     try {
       // Connect to the server
